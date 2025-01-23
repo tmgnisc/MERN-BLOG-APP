@@ -13,41 +13,59 @@ const navItemsInfo = [
 
 const NavItem = ({ name }) => {
   return (
-    <li className=" relative group">
-      <a href="/" className="px-4 py-2">
+    <li className="relative group">
+      <a
+        href="/"
+        className="px-4 py-2 text-base lg:text-sm font-medium text-dark-white lg:text-dark-soft hover:text-blue-500"
+      >
         {name}
       </a>
-      <span className="text-blue-500 absolute transition-all duration-500 font-bold right-0 top-0 group-hover:right-[90%] opacity-0 group-hover:opacity-100"></span>
+      <span className="absolute transition-all duration-500 font-bold right-0 top-0 group-hover:right-[90%] opacity-0 group-hover:opacity-100 text-blue-500">
+        {">"}
+      </span>
     </li>
   );
 };
+
 const Header = () => {
-  const [navIsVisible, setNavIsvisible] = useState(false);
-  const navVisbilityHandler = () => {
-    setNavIsvisible((curState) => {
-      return !curState;
-    });
+  const [navIsVisible, setNavIsVisible] = useState(false);
+
+  const toggleNavVisibility = () => {
+    setNavIsVisible((prev) => !prev);
   };
 
   return (
     <section>
       <header className="container mx-auto px-5 flex justify-between py-4 items-center">
+        {/* Logo Section */}
         <div>
-          <img className="w-16" src={images.Logo} alt="logo" />
+          <img className="w-16" src={images.Logo} alt="Logo" />
         </div>
-        <div className="z-50">
+
+        {/* Menu Icon */}
+        <div className="z-50 lg:hidden">
           {navIsVisible ? (
-            <IoMdClose className="w-6 h-6" onClick={navVisbilityHandler} />
+            <IoMdClose
+              className="w-6 h-6 cursor-pointer"
+              onClick={toggleNavVisibility}
+              aria-label="Close Menu"
+            />
           ) : (
-            <IoIosMenu className="w-6 h-6" onClick={navVisbilityHandler} />
+            <IoIosMenu
+              className="w-6 h-6 cursor-pointer"
+              onClick={toggleNavVisibility}
+              aria-label="Open Menu"
+            />
           )}
         </div>
+
+        {/* Navigation Menu */}
         <div
           className={`${
-            navIsVisible ? "right-0" : "-right-full"
-          } transition-all duration-300 z-49 flex flex-col w-full lg:w-auto justify-center lg:justify-end lg:flex-row fixed top-0 bottom-0 lg:static gap-x-9 items-center`}
+            navIsVisible ? "right-0 bg-dark-hard" : "-right-full"
+          } lg:right-0 lg:bg-transparent transition-all duration-300 z-40 flex flex-col w-full lg:w-auto justify-center lg:justify-end lg:flex-row fixed top-0 bottom-0 lg:static gap-x-9 items-center`}
         >
-          <ul className="flex gap-x-5 font-semibold ">
+          <ul className="flex flex-col lg:flex-row gap-x-5 gap-y-4 lg:gap-y-0 font-semibold">
             {navItemsInfo.map((item) => (
               <NavItem key={item.name} name={item.name} />
             ))}
